@@ -54,16 +54,20 @@ public class CodeBuilder {
 
     @discardableResult
     public func add(code builder: CodeBuilder, indent: Bool = true, crlf: Bool = true) -> CodeBuilder {
-        var arr = builder.build().components(separatedBy: "\n")
-        if arr.count > 0 {
-            let last = arr.count - 1
-            if arr[last] == "" {
-                arr.remove(at: last)
+        let code = builder.build()
+        if code.count == 0 {
+            if crlf {
+                return self.add(string: "\n", crlf: crlf)
             }
-            let separator = "\n\(String(repeating: "\t", count: self.depth))"
-            return self.add(string: arr.joined(separator: separator), indent: indent, crlf: crlf)
+            return self
         }
-        return self
+        var arr = code.components(separatedBy: "\n")
+        let last = arr.count - 1
+        if arr[last] == "" {
+            arr.remove(at: last)
+        }
+        let separator = "\n\(String(repeating: "\t", count: self.depth))"
+        return self.add(string: arr.joined(separator: separator), indent: indent, crlf: crlf)
     }
 
     public func build() -> String {
