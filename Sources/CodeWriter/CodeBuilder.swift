@@ -55,10 +55,7 @@ public class CodeBuilder {
     @discardableResult
     public func add(code builder: CodeBuilder, indent: Bool = true, crlf: Bool = true) -> CodeBuilder {
         let code = builder.build()
-        if code.count == 0 {
-            if crlf {
-                return self.add(string: "\n", crlf: crlf)
-            }
+        guard code.count > 0 else {
             return self
         }
         var arr = code.components(separatedBy: "\n")
