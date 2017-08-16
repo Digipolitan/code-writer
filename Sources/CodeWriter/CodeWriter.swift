@@ -13,3 +13,10 @@ public protocol CodeWriter {
 
     func write(description: Description, depth: Int) -> String
 }
+
+public extension CodeWriter {
+    
+    public func write(description: Description) -> String {
+        return self.write(description: description, depth: 0)
+    }
+}
