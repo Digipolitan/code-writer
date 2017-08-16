@@ -12,7 +12,11 @@ public class CodeBuilder {
     private var code: String
     private var depth: Int
 
-    public init(code: String = "", depth: Int = 0) {
+    public static func from(code: String, depth: Int = 0, crlf: Bool = false) -> CodeBuilder {
+        return CodeBuilder(depth: depth).add(string: code, indent: true, crlf: crlf)
+    }
+
+    public init(depth: Int = 0) {
         self.code = ""
         self.depth = depth
     }
@@ -49,7 +53,7 @@ public class CodeBuilder {
     }
 
     @discardableResult
-    public func add(code builder: CodeBuilder) -> CodeBuilder {
+    public func add(code builder: CodeBuilder, indent: Bool = true, crlf: Bool = true) -> CodeBuilder {
         var arr = builder.build().components(separatedBy: "\n")
         if arr.count > 0 {
             let last = arr.count - 1
@@ -57,7 +61,7 @@ public class CodeBuilder {
                 arr.remove(at: last)
             }
             let separator = "\n\(String(repeating: "\t", count: self.depth))"
-            return self.add(string: arr.joined(separator: separator), indent: true, crlf: true)
+            return self.add(string: arr.joined(separator: separator), indent: indent, crlf: crlf)
         }
         return self
     }
