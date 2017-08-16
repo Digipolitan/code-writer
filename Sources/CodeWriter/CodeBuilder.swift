@@ -12,7 +12,7 @@ public class CodeBuilder {
     private var code: String
     private var depth: Int
 
-    public init(depth: Int = 0) {
+    public init(code: String = "", depth: Int = 0) {
         self.code = ""
         self.depth = depth
     }
