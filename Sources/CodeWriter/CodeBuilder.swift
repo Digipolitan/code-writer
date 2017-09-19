@@ -9,16 +9,20 @@ import Foundation
 
 public class CodeBuilder {
 
+    public static let defaultTab = "    "
+
     private var code: String
     private var depth: Int
+    private var tab: String
 
     public static func from(code: String, depth: Int = 0, crlf: Bool = false) -> CodeBuilder {
         return CodeBuilder(depth: depth).add(string: code, indent: true, crlf: crlf)
     }
 
-    public init(depth: Int = 0) {
+    public init(depth: Int = 0, tab: String = CodeBuilder.defaultTab) {
         self.code = ""
         self.depth = depth
+        self.tab = tab
     }
 
     @discardableResult
@@ -43,7 +47,7 @@ public class CodeBuilder {
     @discardableResult
     public func add(string: String, indent: Bool = false, crlf: Bool = false) -> CodeBuilder {
         if indent {
-            self.code += String(repeating: "\t", count: self.depth)
+            self.code += String(repeating: self.tab, count: self.depth)
         }
         self.code += string
         if crlf {
@@ -63,7 +67,7 @@ public class CodeBuilder {
         if arr[last] == "" {
             arr.remove(at: last)
         }
-        let separator = "\n\(String(repeating: "\t", count: self.depth))"
+        let separator = "\n\(String(repeating: self.tab, count: self.depth))"
         return self.add(string: arr.joined(separator: separator), indent: indent, crlf: crlf)
     }
 

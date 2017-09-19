@@ -7,7 +7,7 @@ class CodeBuilderTests: XCTestCase {
         let builder = CodeBuilder()
         builder.add(line: "if test {").rightTab().add(line: "print(\"ok\")").leftTab().add(line: "}")
         let res = builder.build()
-        XCTAssertEqual(res, "if test {\n\tprint(\"ok\")\n}\n")
+        XCTAssertEqual(res, "if test {\n    print(\"ok\")\n}\n")
     }
 
     func testCodeBuilderWithInnerCodeBuilder() {
@@ -18,7 +18,7 @@ class CodeBuilderTests: XCTestCase {
         builder.add(line: "if polymorph {").rightTab().add(code: other).leftTab().add(line: "}")
 
         let res = builder.build()
-        XCTAssertEqual(res, "if polymorph {\n\tif test {\n\t\tprint(\"ok\")\n\t}\n}\n")
+        XCTAssertEqual(res, "if polymorph {\n    if test {\n        print(\"ok\")\n    }\n}\n")
     }
 
     static var allTests = [
