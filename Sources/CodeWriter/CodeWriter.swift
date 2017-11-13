@@ -15,7 +15,7 @@ public protocol CodeWriter {
 }
 
 public extension CodeWriter {
-    
+
     public func write(description: Description) -> String {
         return self.write(description: description, depth: 0)
     }

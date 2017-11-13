@@ -26,4 +26,3 @@ class CodeBuilderTests: XCTestCase {
         ("testCodeBuilderWithInnerCodeBuilder", testCodeBuilderWithInnerCodeBuilder)
     ]
 }
-
