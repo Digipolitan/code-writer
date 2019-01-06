@@ -83,7 +83,7 @@ public class CodeBuilder {
         if arr[last] == "" {
             arr.remove(at: last)
         }
-        return self.add(lines: arr)
+        return self.add(strings: arr, indent: indent, crlf: crlf)
     }
 
     public func build() -> String {
