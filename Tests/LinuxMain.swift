@@ -1,6 +1,7 @@
 import XCTest
-@testable import CodeWriterTests
 
-XCTMain([
-    testCase(CodeBuilderTests.allTests)
-])
+import CodeWriterTests
+
+var tests = [XCTestCaseEntry]()
+tests += CodeWriterTests.allTests()
+XCTMain(tests)
