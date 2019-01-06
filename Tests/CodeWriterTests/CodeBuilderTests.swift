@@ -1,7 +1,7 @@
 import XCTest
 @testable import CodeWriter
 
-class CodeBuilderTests: XCTestCase {
+final class CodeBuilderTests: XCTestCase {
 
     func testCodeBuilderWithTabs() {
         let builder = CodeBuilder()
