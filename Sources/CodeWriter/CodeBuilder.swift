@@ -10,10 +10,14 @@ import Foundation
 public class CodeBuilder {
 
     public static let defaultTab = "    "
+    public static let newLine = "\n"
 
     private var code: String
     private var depth: Int
     private var tab: String
+    public var indentString: String {
+        return String(repeating: self.tab, count: self.depth)
+    }
 
     public static func from(code: String, depth: Int = 0, crlf: Bool = false) -> CodeBuilder {
         return CodeBuilder(depth: depth).add(string: code, indent: true, crlf: crlf)
@@ -47,13 +51,25 @@ public class CodeBuilder {
     @discardableResult
     public func add(string: String, indent: Bool = false, crlf: Bool = false) -> CodeBuilder {
         if indent {
-            self.code += String(repeating: self.tab, count: self.depth)
+            self.code += self.indentString
         }
         self.code += string
         if crlf {
-            self.code += "\n"
+            self.code += CodeBuilder.newLine
         }
         return self
+    }
+
+    @discardableResult
+    public func add(lines: [String]) -> CodeBuilder {
+        return self.add(strings: lines, indent: true, crlf: true)
+    }
+
+    @discardableResult
+    public func add(strings: [String], indent: Bool = false, crlf: Bool = false) -> CodeBuilder {
+        var separator = crlf == true ? CodeBuilder.newLine : ""
+        separator += indent == true ? self.indentString : ""
+        return self.add(string: strings.joined(separator: separator), indent: indent, crlf: crlf)
     }
 
     @discardableResult
@@ -67,8 +83,7 @@ public class CodeBuilder {
         if arr[last] == "" {
             arr.remove(at: last)
         }
-        let separator = "\n\(String(repeating: self.tab, count: self.depth))"
-        return self.add(string: arr.joined(separator: separator), indent: indent, crlf: crlf)
+        return self.add(lines: arr)
     }
 
     public func build() -> String {
