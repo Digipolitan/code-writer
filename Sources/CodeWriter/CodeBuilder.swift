@@ -67,6 +67,9 @@ public class CodeBuilder {
 
     @discardableResult
     public func add(strings: [String], indent: Bool = false, crlf: Bool = false) -> CodeBuilder {
+        guard strings.count > 0 else {
+            return self
+        }
         var separator = crlf == true ? CodeBuilder.newLine : ""
         separator += indent == true ? self.indentString : ""
         return self.add(string: strings.joined(separator: separator), indent: indent, crlf: crlf)
@@ -78,12 +81,13 @@ public class CodeBuilder {
         guard code.count > 0 else {
             return self
         }
-        var arr = code.components(separatedBy: "\n")
+        var arr = code.components(separatedBy: CodeBuilder.newLine)
         let last = arr.count - 1
-        if arr[last] == "" {
+        if arr[last] == "" { // clear empty newline
             arr.remove(at: last)
         }
-        return self.add(strings: arr, indent: indent, crlf: crlf)
+        let seperator = CodeBuilder.newLine + self.indentString
+        return self.add(string: arr.joined(separator: seperator), indent: indent, crlf: crlf)
     }
 
     public func build() -> String {
